@@ -3,22 +3,22 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 function isContained(aa, bb) {
-	if(!(aa instanceof Array) || !(bb instanceof Array) || ((aa.length < bb.length))) {
-		return false;
-	}
-	for (var i = 0; i < bb.length; i++) {
-		var flag = false;
-		for(var j = 0; j < aa.length; j++){
-			if(aa[j] == bb[i]){
-				flag = true;
-                break;
-			}
-		}
-		if(flag == false){
-			return flag;
-		}
-	}	
-	return true;
+  if (!(aa instanceof Array) || !(bb instanceof Array) || ((aa.length < bb.length))) {
+    return false;
+  }
+  for (var i = 0; i < bb.length; i++) {
+    var flag = false;
+    for (var j = 0; j < aa.length; j++) {
+      if (aa[j] == bb[i]) {
+        flag = true;
+        break;
+      }
+    }
+    if (flag == false) {
+      return flag;
+    }
+  }
+  return true;
 }
 
 export default new Vuex.Store({
@@ -38,7 +38,7 @@ export default new Vuex.Store({
     races: [
       { id: 1, name: '精灵', skill: '2/4/6：20/40/60%精灵闪避' },
       { id: 2, name: '龙', skill: '3：所有龙初始魔法值为100' },
-      { id: 3, name: '人类', skill: '20/25/30%缴械' },
+      { id: 3, name: '人类', skill: '2/4/6：20/25/30%缴械' },
       { id: 4, name: '野兽', skill: '2/4/6：友军召唤物攻击+15/20/25%' },
       { id: 5, name: '恶魔', skill: '1：自身攻击50%' },
       { id: 6, name: '元素', skill: '2：友军元素魔抗+30' },
@@ -112,7 +112,7 @@ export default new Vuex.Store({
       { id: 4, name: '地精刺客流', scheme: [6, 7, 10, 15, 43, 52, 17, 34, 46], description: '构成为6地精3龙、4工匠（极高护甲和回血、输出高）' },
       { id: 5, name: '亡灵猎人流', scheme: [5, 30, 41, 49, 13, 28, 33, 45, 50], description: '构成为4亡灵2娜迦、6猎人（输出极高）' },
       { id: 6, name: '娜迦刺客流', scheme: [19, 32, 45, 50, 6, 16, 29, 31, 42], description: '构成为4娜迦2精灵、6刺客（输出极高、魔抗极高）' },
-      { id: 7, name: '野兽刺客流', scheme: [2, 4, 24, 6, 16, 34, 29, 31, 32, 42], description: '构成为4野兽2精灵、6刺客（输出极高、成型极快）' },
+      { id: 7, name: '野兽刺客流', scheme: [2, 4, 24, 6, 16, 34, 29, 31, 42], description: '构成为4野兽2精灵、6刺客（输出极高、成型极快）' },
       { id: 8, name: '精灵刺客流', scheme: [6, 16, 11, 21, 29, 42, 32, 42, 45], description: '构成为4精灵2娜迦、6刺客（输出极高、闪避高、成型极快）' },
       { id: 9, name: '巨龙法师流', scheme: [17, 34, 46, 3, 12, 40, 49, 36, 50], description: '构成为4人类3龙、6法师（输出极高）' },
       { id: 10, name: '野兽战士流', scheme: [1, 2, 4, 14, 19, 24, 31, 38, 12], description: '构成为4野兽3兽人、6战士（极高护甲、中输出、成型极快）' },
@@ -131,22 +131,263 @@ export default new Vuex.Store({
     activeSchemes: (state) => {
       var _schemes = state.schemes
       var res = []
-      console.log(state.heroInBoard)
       _schemes.forEach(item => {
-        if(isContained(item.scheme, state.heroInBoard)) {
+        if (isContained(item.scheme, state.heroInBoard)) {
           res.push(item)
         }
       })
       return res
+    },
+    buffMsg: (state) => {
+      var heroInBoard = state.heroInBoard
+      var profCount = {
+        '战士': 0,
+        '术士': 0,
+        '恶魔猎手': 0,
+        '工匠': 0,
+        '猎人': 0,
+        '法师': 0,
+        '骑士': 0,
+        '萨满祭司': 0,
+        '德鲁伊': 0,
+        '刺客': 0
+      }
+      var raceCount = {
+        '精灵': 0,
+        '龙': 0,
+        '人类': 0,
+        '野兽': 0,
+        '恶魔': 0,
+        '元素': 0,
+        '地精': 0,
+        '巨魔': 0,
+        '矮人': 0,
+        '食人魔': 0,
+        '娜迦': 0,
+        '兽人': 0,
+        '亡灵': 0
+      }
+      heroInBoard.forEach(item => {
+        var prof = state.hero[item - 1].profession
+        var race = state.hero[item - 1].race
+        profCount[prof] += 1
+        if(race.indexOf('/') > -1) {
+          race = race.split('/')
+          raceCount[race[0]] += 1
+          raceCount[race[1]] += 1
+        } else {
+          raceCount[race] += 1
+        }       
+      })
+      var msg1 = []
+      var msg2 = []
+
+      /***
+       * 职业BUFF
+       */
+      if (profCount['战士'] >= 6) {
+        msg1.push(profCount['战士'] + '个战士，友方战士护甲+10')
+      }
+      if (profCount['战士'] >= 3 && profCount['战士'] < 6) {
+        msg1.push(profCount['战士'] + '个战士，友方战士护甲+8【6战士提供护甲+10】')
+      }
+      if (profCount['战士'] > 0 && profCount['战士'] < 3) {
+
+        msg2.push('还需要' + (3 - profCount['战士']) + '个战士触发BUFF【友方战士护甲+8】')
+      }
+
+      if (profCount['术士'] >= 6) {
+        msg1.push(profCount['术士'] + '个术士，所有友军+30%吸血')
+      }
+      if (profCount['术士'] >= 3 && profCount['术士'] < 6) {
+        msg1.push(profCount['术士'] + '个术士，所有友军+20%吸血【6术士有友军+30%吸血】')
+      }
+      if (profCount['术士'] > 0 && profCount['术士'] < 3) {
+
+        msg2.push('还需要' + (3 - profCount['术士']) + '个术士触发BUFF【所有友军+30%吸血】')
+      }
+
+      if (profCount['工匠'] >= 4) {
+        msg1.push(profCount['工匠'] + '个工匠，所有友军生命回复+20')
+      }
+      if (profCount['工匠'] >= 2 && profCount['工匠'] < 4) {
+        msg1.push(profCount['工匠'] + '个工匠，所有友军生命回复+10【4工匠有友军生命回复+20】')
+      }
+      if (profCount['工匠'] > 0 && profCount['工匠'] < 2) {
+        msg2.push('还需要' + (3 - profCount['工匠']) + '个工匠触发BUFF【友军生命回复+10】')
+      }
+
+      if (profCount['猎人'] >= 6) {
+        msg1.push(profCount['猎人'] + '个猎人，所有友方猎人攻击+35%')
+      }
+      if (profCount['猎人'] >= 3 && profCount['猎人'] < 6) {
+        msg1.push(profCount['猎人'] + '个猎人，友方猎人攻击+25%【6猎人友方猎人攻击+35%】')
+      }
+      if (profCount['猎人'] > 0 && profCount['猎人'] < 3) {
+        msg2.push('还需要' + (3 - profCount['猎人']) + '个猎人触发BUFF【友方猎人攻击+25%】')
+      }
+
+      if (profCount['法师'] >= 6) {
+        msg1.push(profCount['法师'] + '个法师，所有敌方魔抗-30')
+      }
+      if (profCount['法师'] >= 3 && profCount['法师'] < 6) {
+        msg1.push(profCount['法师'] + '个法师，所有敌方魔抗-20【6法师所有敌方魔抗-30】')
+      }
+      if (profCount['法师'] > 0 && profCount['法师'] < 3) {
+
+        msg2.push('还需要' + (3 - profCount['法师']) + '个法师触发BUFF【所有敌方魔抗-20】')
+      }
+
+      if (profCount['刺客'] >= 6) {
+        msg1.push(profCount['刺客'] + '个刺客，20%几率四倍暴击')
+      }
+      if (profCount['刺客'] >= 3 && profCount['刺客'] < 6) {
+        msg1.push(profCount['刺客'] + '个刺客，10%几率四倍暴击【6刺客20%几率四倍暴击】')
+      }
+      if (profCount['刺客'] > 0 && profCount['刺客'] < 3) {
+        msg2.push('还需要' + (3 - profCount['刺客']) + '个刺客触发BUFF【10%几率四倍暴击】')
+      }
+
+      if (profCount['萨满祭司'] >= 1) {
+        msg1.push("战斗开始随机羊一个地方英雄6s")
+      }
+      if (raceCount['萨满祭司'] == 1) {
+        msg2.push('两个萨满战斗开始随机羊一个地方英雄6s【暗影萨满+干扰者】')
+      }
+
+      if (profCount['恶魔猎手'] >= 1) {
+        msg1.push("敌法师专治恶魔")
+      }
+
+      /***
+       * 种族BUFF
+       */
+      if (raceCount['人类'] >= 6) {
+        msg1.push(raceCount['人类'] + '个人类，30%缴械')
+      }
+      if (raceCount['人类'] >= 4 && raceCount['人类'] < 2) {
+        msg1.push(raceCount['人类'] + '个人类，25%缴械【6人类30%缴械】')
+      }
+      if (raceCount['人类'] >= 2 && raceCount['人类'] < 4) {
+        msg1.push(raceCount['人类'] + '个人类，20%缴械【4人类25%缴械】')
+      }
+      if (raceCount['人类'] > 0 && raceCount['人类'] < 2) {
+        msg2.push('还需要' + (2 - raceCount['人类']) + '个人类触发BUFF【20%缴械】')
+      }
+
+      if (raceCount['野兽'] >= 6) {
+        msg1.push(raceCount['野兽'] + '个野兽，友军召唤物攻击+25%')
+      }
+      if (raceCount['野兽'] >= 4 && raceCount['野兽'] < 2) {
+        msg1.push(raceCount['野兽'] + '个野兽，友军召唤物攻击+20%【6野兽友军召唤物攻击+25%】')
+      }
+      if (raceCount['野兽'] >= 2 && raceCount['野兽'] < 4) {
+        msg1.push(raceCount['野兽'] + '个野兽，友军召唤物攻击+15%【4野兽友军召唤物攻击+20%】')
+      }
+      if (raceCount['野兽'] > 0 && raceCount['野兽'] < 2) {
+        msg2.push('还需要' + (2 - raceCount['野兽']) + '个野兽触发BUFF【友军召唤物攻击+15%】')
+      }
+
+      if (raceCount['地精'] >= 6) {
+        msg1.push(raceCount['地精'] + '个地精，友方生命回复+20')
+      }
+      if (raceCount['地精'] >= 3 && raceCount['地精'] < 6) {
+        msg1.push(raceCount['地精'] + '个地精，友方生命回复+10【6地精友方生命回复+20】')
+      }
+      if (raceCount['地精'] > 0 && raceCount['地精'] < 3) {
+
+        msg2.push('还需要' + (3 - raceCount['地精']) + '个地精触发BUFF【友方生命回复+10】')
+      }
+
+      if (raceCount['亡灵'] >= 4) {
+        msg1.push(raceCount['亡灵'] + '个亡灵，敌军护甲-7')
+      }
+      if (raceCount['亡灵'] >= 2 && raceCount['亡灵'] < 4) {
+        msg1.push(raceCount['亡灵'] + '个亡灵，敌军护甲-5【4亡灵敌军护甲-7】')
+      }
+      if (raceCount['亡灵'] > 0 && raceCount['亡灵'] < 2) {
+        msg2.push('还需要' + (2 - raceCount['亡灵']) + '个亡灵触发BUFF【敌军护甲-5】')
+      }
+
+      if (raceCount['兽人'] >= 4) {
+        msg1.push(raceCount['兽人'] + '个兽人，兽人生命+350')
+      }
+      if (raceCount['兽人'] >= 2 && raceCount['兽人'] < 4) {
+        msg1.push(raceCount['兽人'] + '个兽人，兽人生命+250【4兽人兽人生命+350】')
+      }
+      if (raceCount['兽人'] > 0 && raceCount['兽人'] < 2) {
+        msg2.push('还需要' + (2 - raceCount['兽人']) + '个兽人触发BUFF【兽人生命+250】')
+      }
+
+      if (raceCount['娜迦'] >= 4) {
+        msg1.push(raceCount['娜迦'] + '个娜迦，所有友军魔抗+40')
+      }
+      if (raceCount['娜迦'] >= 2 && raceCount['娜迦'] < 4) {
+        msg1.push(raceCount['娜迦'] + '个娜迦，所有友军魔抗+20【4娜迦所有友军魔抗+40】')
+      }
+      if (raceCount['娜迦'] > 0 && raceCount['娜迦'] < 2) {
+        msg2.push('还需要' + (2 - raceCount['娜迦']) + '个娜迦触发BUFF【所有友军魔抗+20】')
+      }
+
+      if (raceCount['巨魔'] >= 4) {
+        msg1.push(raceCount['巨魔'] + '个巨魔，全体友军攻速+30')
+      }
+      if (raceCount['巨魔'] >= 2 && raceCount['巨魔'] < 4) {
+        msg1.push(raceCount['巨魔'] + '个巨魔，全体巨魔攻速+30【6巨魔全体友军攻速+30】')
+      }
+      if (raceCount['巨魔'] > 0 && raceCount['巨魔'] < 2) {
+        msg2.push('还需要' + (2 - raceCount['巨魔']) + '个巨魔触发BUFF【全体巨魔攻速+30】')
+      }
+
+      if (raceCount['精灵'] >= 6) {
+        msg1.push(raceCount['精灵'] + '个精灵，友方精灵60%闪避')
+      }
+      if (raceCount['精灵'] >= 4 && raceCount['精灵'] < 2) {
+        msg1.push(raceCount['精灵'] + '个精灵，友方精灵40%闪避【6精灵友方精灵60%闪避】')
+      }
+      if (raceCount['精灵'] >= 2 && raceCount['精灵'] < 4) {
+        msg1.push(raceCount['精灵'] + '个精灵，友方精灵20%闪避【4精灵友方精灵40%闪避】')
+      }
+      if (raceCount['精灵'] > 0 && raceCount['精灵'] < 2) {
+        msg2.push('还需要' + (2 - raceCount['精灵']) + '个精灵触发BUFF【友方精灵20%闪避】')
+      }
+
+      if (raceCount['龙'] >= 3) {
+        msg1.push(raceCount['龙'] + '个龙，所有龙初始魔法值为100')
+      }
+      if (raceCount['龙'] > 0 && raceCount['龙'] < 3) {
+        msg2.push('还需要' + (2 - raceCount['龙']) + '个龙触发BUFF【所有龙初始魔法值为100】')
+      }
+
+      if (raceCount['恶魔'] >= 1) {
+        msg2.push("只有一个恶魔时触发恶魔BUFF，场上有个"+raceCount['恶魔']+"恶魔")
+      }
+      if (raceCount['恶魔'] == 1) {
+        msg1.push('恶魔自身攻击+50%')
+      }
+
+      if (raceCount['元素'] >= 1) {
+        msg1.push("两个元素友军元素魔抗+30")
+      }
+      if (raceCount['元素'] == 1) {
+        msg2.push('两个元素友军元素魔抗+30【闪电幽魂+谜团】')
+      }
+
+      var msg = {
+        'complete':msg1,
+        'uncomplete':msg2
+      }
+      console.log(msg)
+      return msg
     }
   },
   mutations: {
     addHero: function (state, id) {
-      if(state.heroInBoard.indexOf(id) > -1) return
+      if (state.heroInBoard.indexOf(id) > -1) return
       state.heroInBoard.push(id)
     },
-    deleteHero: function(state, id) {
-      state.heroInBoard.splice(id-1,1)
+    deleteHero: function (state, id) {
+      state.heroInBoard.splice(id - 1, 1)
     }
   },
   actions: {
