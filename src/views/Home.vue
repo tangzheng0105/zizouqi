@@ -13,6 +13,7 @@
       </div>
     </el-col>
     <el-col class="scheme" :span="10">
+      <update-info></update-info>
       <h3>上场英雄</h3>
       <div>
         <el-tag
@@ -70,6 +71,7 @@
 // @ is an alias to /src
 import HeroTable from "@/components/HeroTable.vue";
 import Scheme from "@/components/Scheme.vue";
+import UpdateInfo from "@/components/UpdateInfo.vue";
 
 export default {
   name: "home",
@@ -93,7 +95,8 @@ export default {
   },
   components: {
     HeroTable,
-    Scheme
+    Scheme,
+    UpdateInfo
   },
   computed: {
     heroInboard: function() {

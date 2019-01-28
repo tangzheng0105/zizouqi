@@ -41,7 +41,7 @@ export default new Vuex.Store({
       { id: 3, name: '人类', skill: '2/4/6：20/25/30%缴械' },
       { id: 4, name: '野兽', skill: '2/4/6：友军召唤物攻击+15/20/25%' },
       { id: 5, name: '恶魔', skill: '1：自身攻击50%' },
-      { id: 6, name: '元素', skill: '2：友军元素魔抗+30' },
+      { id: 6, name: '元素', skill: '2/4：己方元素/所有友军被攻击有30%概率被石化3s' },
       { id: 7, name: '地精', skill: '3/6：随机/所有地精护甲+15、生命回复+10' },
       { id: 8, name: '巨魔', skill: '2/4：全体巨魔/友军攻速+30' },
       { id: 9, name: '矮人', skill: '1：自身攻击距离+300' },
@@ -62,6 +62,7 @@ export default new Vuex.Store({
       { id: 9, name: '蝙蝠骑士', race: '巨魔', profession: '骑士', price: '1', avatar: '' },
       { id: 10, name: '修补匠', race: '地精', profession: '工匠', price: '1', avatar: '' },
       { id: 11, name: '敌法师', race: '精灵', profession: '恶魔猎手', price: '1', avatar: '' },
+      { id: 53, name: '小小	', race: '元素', profession: '战士', price: '1', avatar: '' },
       { id: 12, name: '水晶室女', race: '人类', profession: '法师', price: '2', avatar: '' },
       { id: 13, name: '兽王', race: '兽人', profession: '猎人', price: '2', avatar: '' },
       { id: 14, name: '剑圣', race: '兽人', profession: '战士', price: '2', avatar: '' },
@@ -74,6 +75,7 @@ export default new Vuex.Store({
       { id: 21, name: '树精卫士', race: '精灵', profession: '德鲁伊', price: '2', avatar: '' },
       { id: 22, name: '月之骑士', race: '精灵', profession: '骑士', price: '2', avatar: '' },
       { id: 23, name: '先知', race: '精灵', profession: '德鲁伊', price: '2', avatar: '' },
+      { id: 54, name: '变体精灵	', race: '元素', profession: '刺客', price: '2', avatar: '' },
       { id: 24, name: '狼人', race: '人类/野兽', profession: '战士', price: '3', avatar: '' },
       { id: 25, name: '剧毒术士', race: '野兽', profession: '术士', price: '3', avatar: '' },
       { id: 26, name: '全能骑士', race: '人类', profession: '骑士', price: '3', avatar: '' },
@@ -87,6 +89,7 @@ export default new Vuex.Store({
       { id: 34, name: '冥界亚龙', race: '龙', profession: '刺客', price: '3', avatar: '' },
       { id: 35, name: '影魔', race: '恶魔', profession: '术士', price: '3', avatar: '' },
       { id: 36, name: '秀逗魔道士', race: '人类', profession: '法师', price: '3', avatar: '' },
+      { id: 55, name: '恐怖利刃	', race: '恶魔', profession: '恶魔猎手', price: '3', avatar: '' },
       { id: 37, name: '末日使者', race: '恶魔', profession: '战士', price: '4', avatar: '' },
       { id: 38, name: '海军上将', race: '人类', profession: '战士', price: '4', avatar: '' },
       { id: 39, name: '巨魔战将', race: '巨魔', profession: '战士', price: '4', avatar: '' },
@@ -102,14 +105,14 @@ export default new Vuex.Store({
       { id: 49, name: '巫妖	', race: '亡灵', profession: '法师', price: '5', avatar: '' },
       { id: 50, name: '潮汐猎人	', race: '娜迦', profession: '猎人', price: '5', avatar: '' },
       { id: 51, name: '谜团	', race: '元素', profession: '术士', price: '5', avatar: '' },
-      { id: 52, name: '炸弹人	', race: '地精', profession: '工匠', price: '5', avatar: '' }
+      { id: 52, name: '炸弹人	', race: '地精', profession: '工匠', price: '5', avatar: '' }     
     ],
     heroInBoard: [],
     schemes: [
       { id: 1, name: '娜迦战士流', scheme: [19, 32, 45, 50, 1, 4, 24, 37, 38], description: '构成为2野兽2人类4娜迦、6战士（极高护甲和魔抗、输出低）' },
       { id: 2, name: '亡灵骑士流', scheme: [5, 30, 41, 49, 9, 20, 22, 26, 46], description: '构成为2人类4亡灵、6骑士（极肉、输出高）' },
       { id: 3, name: '地精刺客流', scheme: [6, 7, 10, 15, 43, 52, 29, 42, 31], description: '构成为6地精2精灵、4工匠3刺客（极高护甲和回血、输出高）' },
-      { id: 4, name: '地精刺客流', scheme: [6, 7, 10, 15, 43, 52, 17, 34, 46], description: '构成为6地精3龙、4工匠（极高护甲和回血、输出高）' },
+      { id: 4, name: '地精巨龙流', scheme: [6, 7, 10, 15, 43, 52, 17, 34, 46], description: '构成为6地精3龙、4工匠（极高护甲和回血、输出高）' },
       { id: 5, name: '亡灵猎人流', scheme: [5, 30, 41, 49, 13, 28, 33, 45, 50], description: '构成为4亡灵2娜迦、6猎人（输出极高）' },
       { id: 6, name: '娜迦刺客流', scheme: [19, 32, 45, 50, 6, 16, 29, 31, 42], description: '构成为4娜迦2精灵、6刺客（输出极高、魔抗极高）' },
       { id: 7, name: '野兽刺客流', scheme: [2, 4, 24, 6, 16, 34, 29, 31, 42], description: '构成为4野兽2精灵、6刺客（输出极高、成型极快）' },
@@ -120,11 +123,13 @@ export default new Vuex.Store({
       { id: 12, name: '巨龙骑士流', scheme: [17, 34, 46, 9, 20, 22, 26, 30, 12], description: '构成为3巨龙3人类2精灵、6骑士（极肉、中输出、成型快）' },
       { id: 13, name: '巨魔战士流', scheme: [8, 9, 18, 39, 4, 14, 19, 24, 39], description: '构成为4巨魔2野兽2人类、6战士（极高护甲、高输出、成型极快）' },
       { id: 14, name: '回蓝万金流', scheme: [17, 46, 34, 8, 9, 18, 39, 31, 49], description: '构成为3巨龙4巨魔、2骑士（极高输出、强控制）' },
-      { id: 15, name: '双德巨兽流', scheme: [2, 21, 4, 24, 31, 8, 9, 18, 39], description: '构成为4巨魔4野兽、2小德3战士（双德速科，高输出，高护甲）' },
+      { id: 15, name: '双德巨龙流', scheme: [2, 21, 4, 24, 31, 8, 9, 18, 39], description: '构成为4巨魔4野兽、2小德3战士（双德速科，高输出，高护甲）' },
       { id: 16, name: '双德巨兽流', scheme: [1, 2, 19, 21, 4, 24, 31, 38, 39], description: '构成为4野兽、2小德6战士（双德速科，中输出，极高护甲）' },
       { id: 17, name: '双德灵龙流', scheme: [2, 21, 11, 17, 22, 29, 34, 42, 46], description: '构成为6精灵3巨龙、2小德3刺客2骑士（双德速科，极高输出，极高闪避）' },
       { id: 18, name: '双德刺客流', scheme: [2, 21, 16, 29, 31, 32, 42, 34, 45], description: '构成为2野兽2精灵2娜迦、2小德6刺客（双德速科，极高输出，高魔抗）' },
-      { id: 19, name: '双德猎人流', scheme: [2, 21, 5, 13, 28, 33, 45, 50, 30], description: '构成为2亡灵2娜迦2精灵、2小德6猎人（双德速科，极高输出，高魔抗）' }
+      { id: 19, name: '双德猎人流', scheme: [2, 21, 5, 13, 28, 33, 45, 50, 30], description: '构成为2亡灵2娜迦2精灵、2小德6猎人（双德速科，极高输出，高魔抗）' },
+      { id: 20, name: '暴力大招流', scheme: [38, 41, 40, 37, 48, 49, 50, 52, 45, 12], description: '生死看淡，不服就干' },
+      { id: 21, name: '恶魔巨术流', scheme: [8,9,18,39,11,55,35,43,50,44], description: '输出拉满' }
     ]
   },
   getters: {
@@ -171,13 +176,13 @@ export default new Vuex.Store({
         var prof = state.hero[item - 1].profession
         var race = state.hero[item - 1].race
         profCount[prof] += 1
-        if(race.indexOf('/') > -1) {
+        if (race.indexOf('/') > -1) {
           race = race.split('/')
           raceCount[race[0]] += 1
           raceCount[race[1]] += 1
         } else {
           raceCount[race] += 1
-        }       
+        }
       })
       var msg1 = []
       var msg2 = []
@@ -185,15 +190,18 @@ export default new Vuex.Store({
       /***
        * 职业BUFF
        */
-      if (profCount['战士'] >= 6) {
+      if (profCount['战士'] >= 9) {
         msg1.push(profCount['战士'] + '个战士，友方战士护甲+10')
       }
+      if (profCount['战士'] >= 6 && profCount['战士'] < 9) {
+        msg1.push(profCount['战士'] + '个战士，友方战士护甲+8')
+      }
       if (profCount['战士'] >= 3 && profCount['战士'] < 6) {
-        msg1.push(profCount['战士'] + '个战士，友方战士护甲+8【6战士提供护甲+10】')
+        msg1.push(profCount['战士'] + '个战士，友方战士护甲+6【6战士提供护甲+8】')
       }
       if (profCount['战士'] > 0 && profCount['战士'] < 3) {
 
-        msg2.push('还需要' + (3 - profCount['战士']) + '个战士触发BUFF【友方战士护甲+8】')
+        msg2.push('还需要' + (3 - profCount['战士']) + '个战士触发BUFF【友方战士护甲+6】')
       }
 
       if (profCount['术士'] >= 6) {
@@ -228,14 +236,14 @@ export default new Vuex.Store({
       }
 
       if (profCount['法师'] >= 6) {
-        msg1.push(profCount['法师'] + '个法师，所有敌方魔抗-30')
+        msg1.push(profCount['法师'] + '个法师，所有敌方魔抗-80')
       }
       if (profCount['法师'] >= 3 && profCount['法师'] < 6) {
-        msg1.push(profCount['法师'] + '个法师，所有敌方魔抗-20【6法师所有敌方魔抗-30】')
+        msg1.push(profCount['法师'] + '个法师，所有敌方魔抗-40【6法师所有敌方魔抗-80】')
       }
       if (profCount['法师'] > 0 && profCount['法师'] < 3) {
 
-        msg2.push('还需要' + (3 - profCount['法师']) + '个法师触发BUFF【所有敌方魔抗-20】')
+        msg2.push('还需要' + (3 - profCount['法师']) + '个法师触发BUFF【所有敌方魔抗-40】')
       }
 
       if (profCount['刺客'] >= 6) {
@@ -248,7 +256,7 @@ export default new Vuex.Store({
         msg2.push('还需要' + (3 - profCount['刺客']) + '个刺客触发BUFF【10%几率四倍暴击】')
       }
 
-      if (profCount['萨满祭司'] >= 1) {
+      if (profCount['萨满祭司'] > 1) {
         msg1.push("战斗开始随机羊一个地方英雄6s")
       }
       if (raceCount['萨满祭司'] == 1) {
@@ -333,23 +341,23 @@ export default new Vuex.Store({
         msg1.push(raceCount['巨魔'] + '个巨魔，全体友军攻速+30')
       }
       if (raceCount['巨魔'] >= 2 && raceCount['巨魔'] < 4) {
-        msg1.push(raceCount['巨魔'] + '个巨魔，全体巨魔攻速+30【6巨魔全体友军攻速+30】')
+        msg1.push(raceCount['巨魔'] + '个巨魔，全体巨魔攻速+30【4巨魔全体友军攻速+30】')
       }
       if (raceCount['巨魔'] > 0 && raceCount['巨魔'] < 2) {
         msg2.push('还需要' + (2 - raceCount['巨魔']) + '个巨魔触发BUFF【全体巨魔攻速+30】')
       }
 
-      if (raceCount['精灵'] >= 6) {
+      if (raceCount['精灵'] >= 9) {
         msg1.push(raceCount['精灵'] + '个精灵，友方精灵60%闪避')
       }
-      if (raceCount['精灵'] >= 4 && raceCount['精灵'] < 2) {
-        msg1.push(raceCount['精灵'] + '个精灵，友方精灵40%闪避【6精灵友方精灵60%闪避】')
+      if (raceCount['精灵'] >= 6 && raceCount['精灵'] < 9) {
+        msg1.push(raceCount['精灵'] + '个精灵，友方精灵44%闪避【6精灵友方精灵60%闪避】')
       }
-      if (raceCount['精灵'] >= 2 && raceCount['精灵'] < 4) {
-        msg1.push(raceCount['精灵'] + '个精灵，友方精灵20%闪避【4精灵友方精灵40%闪避】')
+      if (raceCount['精灵'] >= 3 && raceCount['精灵'] < 6) {
+        msg1.push(raceCount['精灵'] + '个精灵，友方精灵25%闪避【4精灵友方精灵44%闪避】')
       }
-      if (raceCount['精灵'] > 0 && raceCount['精灵'] < 2) {
-        msg2.push('还需要' + (2 - raceCount['精灵']) + '个精灵触发BUFF【友方精灵20%闪避】')
+      if (raceCount['精灵'] > 0 && raceCount['精灵'] < 3) {
+        msg2.push('还需要' + (3 - raceCount['精灵']) + '个精灵触发BUFF【友方精灵25%闪避】')
       }
 
       if (raceCount['龙'] >= 3) {
@@ -360,22 +368,25 @@ export default new Vuex.Store({
       }
 
       if (raceCount['恶魔'] >= 1) {
-        msg2.push("只有一个恶魔时触发恶魔BUFF，场上有个"+raceCount['恶魔']+"恶魔")
+        msg2.push("只有一个恶魔时触发恶魔BUFF，场上有个" + raceCount['恶魔'] + "恶魔")
       }
       if (raceCount['恶魔'] == 1) {
         msg1.push('恶魔自身攻击+50%')
       }
 
-      if (raceCount['元素'] >= 1) {
-        msg1.push("两个元素友军元素魔抗+30")
+      if (raceCount['元素'] >= 4) {
+        msg1.push(raceCount['元素'] + '个元素，友军被攻击时30%概率石化对手3s')
       }
-      if (raceCount['元素'] == 1) {
-        msg2.push('两个元素友军元素魔抗+30【闪电幽魂+谜团】')
+      if (raceCount['元素'] >= 2 && raceCount['巨魔'] < 4) {
+        msg1.push(raceCount['元素'] + '个元素，元素被攻击时30%概率石化对手3s【4元素友军被攻击时30%概率石化对手3s】')
+      }
+      if (raceCount['元素'] > 0 && raceCount['精灵'] < 2) {
+        msg2.push('两个元素触发BUFF【元素被攻击时30%概率石化对手3s】')
       }
 
       var msg = {
-        'complete':msg1,
-        'uncomplete':msg2
+        'complete': msg1,
+        'uncomplete': msg2
       }
       console.log(msg)
       return msg
@@ -387,7 +398,7 @@ export default new Vuex.Store({
       state.heroInBoard.push(id)
     },
     deleteHero: function (state, id) {
-      state.heroInBoard.splice(id - 1, 1)
+      state.heroInBoard.splice(id, 1)
     }
   },
   actions: {
