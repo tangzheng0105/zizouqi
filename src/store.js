@@ -61,8 +61,7 @@ export default new Vuex.Store({
       { id: 8, name: '暗影萨满', race: '巨魔', profession: '萨满祭司', price: '1', avatar: '' },
       { id: 9, name: '蝙蝠骑士', race: '巨魔', profession: '骑士', price: '1', avatar: '' },
       { id: 10, name: '修补匠', race: '地精', profession: '工匠', price: '1', avatar: '' },
-      { id: 11, name: '敌法师', race: '精灵', profession: '恶魔猎手', price: '1', avatar: '' },
-      { id: 53, name: '小小	', race: '元素', profession: '战士', price: '1', avatar: '' },
+      { id: 11, name: '敌法师', race: '精灵', profession: '恶魔猎手', price: '1', avatar: '' },      
       { id: 12, name: '水晶室女', race: '人类', profession: '法师', price: '2', avatar: '' },
       { id: 13, name: '兽王', race: '兽人', profession: '猎人', price: '2', avatar: '' },
       { id: 14, name: '剑圣', race: '兽人', profession: '战士', price: '2', avatar: '' },
@@ -74,8 +73,7 @@ export default new Vuex.Store({
       { id: 20, name: '混沌骑士', race: '恶魔', profession: '骑士', price: '2', avatar: '' },
       { id: 21, name: '树精卫士', race: '精灵', profession: '德鲁伊', price: '2', avatar: '' },
       { id: 22, name: '月之骑士', race: '精灵', profession: '骑士', price: '2', avatar: '' },
-      { id: 23, name: '先知', race: '精灵', profession: '德鲁伊', price: '2', avatar: '' },
-      { id: 54, name: '变体精灵	', race: '元素', profession: '刺客', price: '2', avatar: '' },
+      { id: 23, name: '先知', race: '精灵', profession: '德鲁伊', price: '2', avatar: '' },      
       { id: 24, name: '狼人', race: '人类/野兽', profession: '战士', price: '3', avatar: '' },
       { id: 25, name: '剧毒术士', race: '野兽', profession: '术士', price: '3', avatar: '' },
       { id: 26, name: '全能骑士', race: '人类', profession: '骑士', price: '3', avatar: '' },
@@ -88,8 +86,7 @@ export default new Vuex.Store({
       { id: 33, name: '狙击手', race: '矮人', profession: '猎人', price: '3', avatar: '' },
       { id: 34, name: '冥界亚龙', race: '龙', profession: '刺客', price: '3', avatar: '' },
       { id: 35, name: '影魔', race: '恶魔', profession: '术士', price: '3', avatar: '' },
-      { id: 36, name: '秀逗魔道士', race: '人类', profession: '法师', price: '3', avatar: '' },
-      { id: 55, name: '恐怖利刃	', race: '恶魔', profession: '恶魔猎手', price: '3', avatar: '' },
+      { id: 36, name: '秀逗魔道士', race: '人类', profession: '法师', price: '3', avatar: '' },      
       { id: 37, name: '末日使者', race: '恶魔', profession: '战士', price: '4', avatar: '' },
       { id: 38, name: '海军上将', race: '人类', profession: '战士', price: '4', avatar: '' },
       { id: 39, name: '巨魔战将', race: '巨魔', profession: '战士', price: '4', avatar: '' },
@@ -105,7 +102,10 @@ export default new Vuex.Store({
       { id: 49, name: '巫妖	', race: '亡灵', profession: '法师', price: '5', avatar: '' },
       { id: 50, name: '潮汐猎人	', race: '娜迦', profession: '猎人', price: '5', avatar: '' },
       { id: 51, name: '谜团	', race: '元素', profession: '术士', price: '5', avatar: '' },
-      { id: 52, name: '炸弹人	', race: '地精', profession: '工匠', price: '5', avatar: '' }     
+      { id: 52, name: '炸弹人	', race: '地精', profession: '工匠', price: '5', avatar: '' },
+      { id: 53, name: '小小	', race: '元素', profession: '战士', price: '1', avatar: '' },   
+      { id: 54, name: '变体精灵	', race: '元素', profession: '刺客', price: '2', avatar: '' },  
+      { id: 55, name: '恐怖利刃	', race: '恶魔', profession: '恶魔猎手', price: '3', avatar: '' }
     ],
     heroInBoard: [],
     schemes: [
@@ -129,7 +129,8 @@ export default new Vuex.Store({
       { id: 18, name: '双德刺客流', scheme: [2, 21, 16, 29, 31, 32, 42, 34, 45], description: '构成为2野兽2精灵2娜迦、2小德6刺客（双德速科，极高输出，高魔抗）' },
       { id: 19, name: '双德猎人流', scheme: [2, 21, 5, 13, 28, 33, 45, 50, 30], description: '构成为2亡灵2娜迦2精灵、2小德6猎人（双德速科，极高输出，高魔抗）' },
       { id: 20, name: '暴力大招流', scheme: [38, 41, 40, 37, 48, 49, 50, 52, 45, 12], description: '生死看淡，不服就干' },
-      { id: 21, name: '恶魔巨术流', scheme: [8,9,18,39,11,55,35,43,50,44], description: '输出拉满' }
+      { id: 21, name: '恶魔巨术流', scheme: [8,9,18,39,11,55,35,43,50,44], description: '输出拉满' },
+      { id: 21, name: '骑士恶魔流', scheme: [46,30,20,26,11,55,41,51,51,49], description: '4骑士、3术士、2人类、2亡灵、2恶魔猎手' }
     ]
   },
   getters: {
@@ -263,8 +264,25 @@ export default new Vuex.Store({
         msg2.push('两个萨满战斗开始随机羊一个地方英雄6s【暗影萨满+干扰者】')
       }
 
-      if (profCount['恶魔猎手'] >= 1) {
-        msg1.push("敌法师专治恶魔")
+      if (profCount['恶魔猎手'] == 2) {
+        msg1.push("所有恶魔只算一个恶魔")
+      }
+
+      if (profCount['恶魔猎手'] == 1) {
+        msg1.push("凑齐敌法和灵魂守卫触发BUFF【所有恶魔只算一个恶魔】")
+      }
+
+      if (profCount['骑士'] >= 6) {
+        msg1.push(profCount['骑士'] + '个人类，友方骑士45%时间减伤护盾')
+      }
+      if (profCount['骑士'] >= 4 && profCount['骑士'] < 2) {
+        msg1.push(profCount['骑士'] + '个人类，友方骑士35%时间减伤护盾【友方骑士45%时间减伤护盾】')
+      }
+      if (profCount['骑士'] >= 2 && profCount['骑士'] < 4) {
+        msg1.push(profCount['骑士'] + '个人类，友方骑士25%时间减伤护盾【友方骑士35%时间减伤护盾】')
+      }
+      if (profCount['骑士'] > 0 && profCount['骑士'] < 2) {
+        msg2.push('还需要' + (2 - profCount['骑士']) + '个骑士触发BUFF【友方骑士25%时间减伤护盾】')
       }
 
       /***
@@ -367,7 +385,10 @@ export default new Vuex.Store({
         msg2.push('还需要' + (2 - raceCount['龙']) + '个龙触发BUFF【所有龙初始魔法值为100】')
       }
 
-      if (raceCount['恶魔'] >= 1) {
+      if(raceCount['恶魔'] > 1 && profCount['恶魔猎手'] < 2) {
+        msg1.push('有两个恶魔猎手在场，所有恶魔自身攻击+50%')
+      }
+      if (raceCount['恶魔'] > 1 && profCount['恶魔猎手'] < 2) {
         msg2.push("只有一个恶魔时触发恶魔BUFF，场上有个" + raceCount['恶魔'] + "恶魔")
       }
       if (raceCount['恶魔'] == 1) {
